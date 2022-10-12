@@ -6,9 +6,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         self.window = UIWindow(frame: UIScreen.main.bounds)
-        let viewController = WordGeneratorViewController(nibName: nil, bundle: nil)
-        let navigationController = UINavigationController(rootViewController: viewController)
-        self.window?.rootViewController = navigationController
+        
+        let wordGeneratorViewController = WordGeneratorViewController(nibName: nil, bundle: nil)
+        let wordGeneratorNavigationController = UINavigationController(rootViewController: wordGeneratorViewController)
+        wordGeneratorNavigationController.tabBarItem = UITabBarItem(title: "Word Generator", image: nil, tag: 0)
+
+        let usersViewController = UsersViewController(nibName: nil, bundle: nil)
+        let usersNavigationController = UINavigationController(rootViewController: usersViewController)
+        usersNavigationController.tabBarItem = UITabBarItem(title: "Users", image: nil, tag: 1)
+        
+        let tabBarController = UITabBarController(nibName: nil, bundle: nil)
+        tabBarController.viewControllers = [usersNavigationController, wordGeneratorNavigationController]
+        
+        self.window?.rootViewController = tabBarController
         self.window?.makeKeyAndVisible()
         return true
     }

@@ -13,7 +13,7 @@ class UsersViewController: UITableViewController {
     var isSearchBarEmpty: Bool {
         return searchController.searchBar.text?.isEmpty ?? true
     }
-    
+
     var isFiltering: Bool {
         return searchController.isActive && !isSearchBarEmpty
     }
@@ -52,14 +52,15 @@ class UsersViewController: UITableViewController {
             user = users[indexPath.row]
         }
         
-        cell.textLabel?.text = user.name
+        cell.textLabel?.text = user.name + " " + user.surname
 
         return cell
     }
     
     func filterContentForSearchText(_ searchText: String) {
         filteredUsers = users.filter { (user: User) -> Bool in
-            return user.name.lowercased().contains(searchText.lowercased())
+            let fullName = user.name + " " + user.surname
+            return fullName.lowercased().contains(searchText.lowercased())
         }
         
         tableView.reloadData()
@@ -74,6 +75,7 @@ extension UsersViewController: UISearchResultsUpdating {
 
 extension UsersViewController: UserCreateViewControllerDelegate {
     func userCreateViewController(_ userCreateViewController: UserCreateViewController, didCreateUser user: User) {
-        print(user.name)
+        users.append(user)
+        tableView.reloadData()
     }
 }

@@ -4,6 +4,8 @@ class UsersViewController: UITableViewController {
     var filteredUsers = [User]()
     var users = User.generateRandom()
 
+    var searchTask: DispatchWorkItem?
+
     lazy var searchController: UISearchController = {
         let searchController = UISearchController(searchResultsController: nil)
         searchController.searchResultsUpdater = self
@@ -16,6 +18,16 @@ class UsersViewController: UITableViewController {
 
     var isFiltering: Bool {
         return searchController.isActive && !isSearchBarEmpty
+    }
+    
+    var isSearching: Bool = false {
+        didSet {
+            if isSearching {
+                // show loading
+            } else {
+                // remove loading
+            }
+        }
     }
     
     override func viewDidLoad() {
@@ -69,7 +81,14 @@ class UsersViewController: UITableViewController {
 
 extension UsersViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
-        filterContentForSearchText(searchController.searchBar.text ?? "")
+        self.searchTask?.cancel()
+
+        let task = DispatchWorkItem { [weak self] in
+            self?.filterContentForSearchText(searchController.searchBar.text ?? "")
+        }
+        self.searchTask = task
+
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5, execute: task)
     }
 }
 

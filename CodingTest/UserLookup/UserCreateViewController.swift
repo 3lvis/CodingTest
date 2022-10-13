@@ -17,19 +17,10 @@ class UserCreateViewController: UIViewController {
     lazy var nameTextField: UITextField = {
         let textField = UITextField(frame: .zero)
         textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.backgroundColor = UIColor.black.withAlphaComponent(0.1)
-        textField.layer.cornerRadius = 8
-        
-        let paddingView: UIView = UIView(frame: CGRect(x: 0, y: 0, width: 12, height: 1))
-        textField.leftView = paddingView
-        textField.rightView = paddingView
-        textField.leftViewMode = .always
-        textField.rightViewMode = .always
+        textField.borderStyle = .roundedRect
 
         return textField
     }()
-    
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()

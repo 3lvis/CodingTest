@@ -59,10 +59,10 @@
 				280F1C8728F76FF500667279 /* AppDelegate.swift */,
 				280F1C9B28F7708F00667279 /* WordGenerator.swift */,
 				280F1C9C28F7708F00667279 /* WordGeneratorViewController.swift */,
+				283B32E828F773B20071E987 /* UsersViewController.swift */,
 				280F1C9028F76FF600667279 /* Assets.xcassets */,
 				280F1C9228F76FF600667279 /* LaunchScreen.storyboard */,
 				280F1C9528F76FF600667279 /* Info.plist */,
-				283B32E828F773B20071E987 /* UsersViewController.swift */,
 			);
 			path = CodingTest;
 			sourceTree = "<group>";

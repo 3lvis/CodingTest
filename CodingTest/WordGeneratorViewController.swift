@@ -4,7 +4,6 @@ class WordGeneratorViewController: UIViewController {
     lazy var titleLabel: UILabel = {
         let label = UILabel(frame: .zero)
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Hello from the other"
         label.font = UIFont.systemFont(ofSize: 32.0)
         return label
     }()

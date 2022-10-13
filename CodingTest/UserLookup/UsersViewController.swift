@@ -1,8 +1,8 @@
 import UIKit
 
 class UsersViewController: UITableViewController {
-    var filteredUsers = [String]()
-    var users = ["Jennifer", "Peter", "Ramon", "Joshua", "Michael"]
+    var filteredUsers = [User]()
+    var users = User.generateRandom()
 
     lazy var searchController: UISearchController = {
         let searchController = UISearchController(searchResultsController: nil)
@@ -25,7 +25,10 @@ class UsersViewController: UITableViewController {
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false
         navigationItem.rightBarButtonItem = UIBarButtonItem(systemItem: .add, primaryAction: UIAction(handler: { action in
-            print("ADD!")
+            let userCreateViewController = UserCreateViewController(nibName: nil, bundle: nil)
+            userCreateViewController.delegate = self
+            let navigationController = UINavigationController(rootViewController: userCreateViewController)
+            self.present(navigationController, animated: true)
         }))
         
         self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
@@ -41,21 +44,22 @@ class UsersViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-        var username: String
         
+        let user: User
         if isFiltering {
-            username = filteredUsers[indexPath.row]
+            user = filteredUsers[indexPath.row]
         } else {
-            username = users[indexPath.row]
+            user = users[indexPath.row]
         }
         
-        cell.textLabel?.text = username
+        cell.textLabel?.text = user.name
+
         return cell
     }
     
     func filterContentForSearchText(_ searchText: String) {
-        filteredUsers = users.filter { (user: String) -> Bool in
-            return user.lowercased().contains(searchText.lowercased())
+        filteredUsers = users.filter { (user: User) -> Bool in
+            return user.name.lowercased().contains(searchText.lowercased())
         }
         
         tableView.reloadData()
@@ -65,5 +69,11 @@ class UsersViewController: UITableViewController {
 extension UsersViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         filterContentForSearchText(searchController.searchBar.text ?? "")
+    }
+}
+
+extension UsersViewController: UserCreateViewControllerDelegate {
+    func userCreateViewController(_ userCreateViewController: UserCreateViewController, didCreateUser user: User) {
+        print(user.name)
     }
 }

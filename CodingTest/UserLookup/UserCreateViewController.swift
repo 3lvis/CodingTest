@@ -47,7 +47,7 @@ class UserCreateViewController: UIViewController {
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(systemItem: .done, primaryAction: UIAction(handler: { [self] _ in
             guard let name = self.nameTextField.text else { return }
-            guard let surname = self.nameTextField.text else { return }
+            guard let surname = self.surnameTextField.text else { return }
             let user = User(name: name, surname: surname)
             self.delegate?.userCreateViewController(self, didCreateUser: user)
             self.dismiss(animated: true)
